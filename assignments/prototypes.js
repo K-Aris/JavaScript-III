@@ -135,3 +135,68 @@ Humanoid.prototype.greet = function() {
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+
+function Villain(badObj) {
+  Humanoid.call(this, badObj);
+  this.nemisis = badObj.nemisis;
+  this.parentType = badObj.parentType;     
+}
+
+Villain.prototype = Object.create(Humanoid.prototype);
+Villain.prototype.yells = function () {
+  return `${this.nemisis} I am your ${this.parentType}.!!!!!`;
+};
+
+
+function Hero(goodObj) {
+  Humanoid.call(this, goodObj); 
+  Villain.call(this, goodObj);
+
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);
+Hero.prototype.screams = function () {
+  return `Screams NOOO!!!!! like a ${this.parentType}`;
+};
+
+
+const dv = new Villain({
+  createdAt: new Date(),
+  dimensions: {
+    length: 2,
+    width: 3,
+    height: 10,
+  },
+  healthPoints: 5,
+  name: 'Darth Vader',
+  team: 'The Empire',
+  weapons: [
+    'Red light saber',
+  ],
+  language: 'Raspy',
+  nemisis: "Luke Skywalker", 
+  parentType: "Father", 
+});
+
+const ls = new Hero({
+  createdAt: new Date(),
+  dimensions: {
+    length: 2,
+    width: 2,
+    height: 5,
+  },
+  healthPoints: 5,
+  name: 'Luke Skywalker',
+  team: 'Jedi',
+  weapons: [
+    'Green light saber',
+  ],
+  language: 'fear',
+  nemisis: "Darth Vader",
+  parentType: "scared child",
+});
+
+
+console.log(dv.yells());
+console.log(ls.screams());
